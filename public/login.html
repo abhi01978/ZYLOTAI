@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZylotAi | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow: hidden;
+        }
+        .glass { 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            backdrop-filter: blur(15px); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .input-glow:focus {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+        /* Background animation */
+        .bg-gradient {
+            position: absolute; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+            z-index: -1; filter: blur(40px);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6 relative">
+
+    <div class="bg-gradient top-10 left-10"></div>
+    <div class="bg-gradient bottom-10 right-10"></div>
+
+    <div class="glass p-10 rounded-[2.5rem] w-full max-w-md transform transition-all">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-black tracking-tighter mb-2">Zylot<span class="text-blue-500">Ai</span></h1>
+            <p class="text-gray-500 text-sm font-medium" id="form-title">Login to your AI Dashboard</p>
+        </div>
+
+        <div class="space-y-4">
+            <div id="signup-fields" class="hidden space-y-4 transition-all duration-500">
+                <div class="relative">
+                    <i class="fas fa-briefcase absolute left-4 top-4.5 text-gray-500 text-xs"></i>
+                    <input id="reg-bizName" class="w-full p-4 pl-10 rounded-2xl bg-white/5 border border-white/10 outline-none input-glow transition-all" placeholder="Your Business Name">
+                </div>
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-envelope absolute left-4 top-4.5 text-gray-500 text-xs"></i>
+                <input id="email" type="email" class="w-full p-4 pl-10 rounded-2xl bg-white/5 border border-white/10 outline-none input-glow transition-all" placeholder="Email Address">
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-lock absolute left-4 top-4.5 text-gray-500 text-xs"></i>
+                <input id="password" type="password" class="w-full p-4 pl-10 rounded-2xl bg-white/5 border border-white/10 outline-none input-glow transition-all" placeholder="Password">
+            </div>
+            
+            <button onclick="handleSubmit()" id="main-btn" class="w-full bg-blue-600 hover:bg-blue-500 p-4 rounded-2xl font-bold text-lg shadow-lg shadow-blue-600/20 transition-all active:scale-95 flex items-center justify-center gap-3">
+                <span>Login 🚀</span>
+            </button>
+        </div>
+
+        <div class="mt-8 text-center">
+            <p class="text-gray-500 text-sm">
+                <span id="toggle-text">Don't have an account?</span> 
+                <button onclick="toggleForm()" class="text-blue-500 font-bold hover:underline underline-offset-4 ml-1" id="toggle-btn">Sign Up</button>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in
+        if(localStorage.getItem('zylotOwnerId')) {
+            window.location.href = '/admin';
+        }
+
+        let isLogin = true;
+
+        function toggleForm() {
+            isLogin = !isLogin;
+            const signupFields = document.getElementById('signup-fields');
+            const title = document.getElementById('form-title');
+            const btn = document.getElementById('main-btn');
+            const toggleText = document.getElementById('toggle-text');
+            const toggleBtn = document.getElementById('toggle-btn');
+
+            if(isLogin) {
+                signupFields.classList.add('hidden');
+                title.innerText = 'Login to your AI Dashboard';
+                btn.innerHTML = '<span>Login 🚀</span>';
+                toggleText.innerText = "Don't have an account?";
+                toggleBtn.innerText = "Sign Up";
+            } else {
+                signupFields.classList.remove('hidden');
+                title.innerText = 'Create your SaaS Account';
+                btn.innerHTML = '<span>Get Started ✨</span>';
+                toggleText.innerText = "Already have an account?";
+                toggleBtn.innerText = "Login";
+            }
+        }
+
+        async function handleSubmit() {
+            const btn = document.getElementById('main-btn');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const bizName = document.getElementById('reg-bizName').value;
+
+            if(!email || !password) return alert("Please fill all fields");
+            if(!isLogin && !bizName) return alert("Please enter business name");
+
+            // Loading state
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Processing...';
+
+            const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
+            const body = { email, password };
+            if(!isLogin) body.businessName = bizName;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await res.json();
+                
+                if(data.success || data.ownerId) {
+                    // Success! Store data
+                    localStorage.setItem('zylotOwnerId', data.ownerId);
+                    localStorage.setItem('zylotBizName', data.businessName || bizName);
+                    
+                    // Add a small success effect before redirect
+                    btn.classList.replace('bg-blue-600', 'bg-green-600');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Success!';
+                    
+                    setTimeout(() => {
+                        window.location.href = '/admin';
+                    }, 800);
+                } else {
+                    alert(data.message || "Invalid credentials");
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                }
+            } catch (err) {
+                alert("Server error. Please try again.");
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }
+        }
+    </script>
+</body>
+</html>

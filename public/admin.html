@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZylotAi | Admin Console</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background:#000; color:#f4f4f5; scroll-behavior: smooth; overflow-x: hidden; }
+        .glass-card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); backdrop-filter: blur(20px); }
+        .input-field { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); padding:12px; border-radius:12px; width:100%; color:white; outline:none; transition: 0.3s; }
+        .input-field:focus { border-color:#3b82f6; background:rgba(59,130,246,0.05); }
+        .btn-primary { background:#3b82f6; font-weight:800; border-radius:14px; padding:14px; transition: 0.3s; cursor: pointer; border:none; color:white; }
+        .btn-primary:hover { background:#2563eb; transform: translateY(-2px); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .active-link { background:linear-gradient(90deg,rgba(59,130,246,0.15),transparent); border-left:3px solid #3b82f6; color:white !important; }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="lg:hidden flex justify-between items-center p-4 sticky top-0 z-50 glass-card">
+    <span class="text-xl font-black">Zylot<span class="text-blue-500">Ai</span></span>
+    <button onclick="logout()" class="text-xs font-bold text-red-400">LOGOUT</button>
+</div>
+
+<div class="flex min-h-screen">
+    <aside class="hidden lg:flex w-72 fixed h-screen p-6 border-r border-white/5 flex-col gap-6">
+        <div class="text-2xl font-black mb-4">Zylot<span class="text-blue-500">Ai</span></div>
+        <button id="nav-dashboard" onclick="showSection('dashboard')" class="p-4 rounded-xl flex gap-4 text-gray-400 hover:bg-white/5 transition-all">
+            <i class="fas fa-th-large mt-1"></i> Dashboard
+        </button>
+        <button id="nav-training" onclick="showSection('training')" class="p-4 rounded-xl flex gap-4 active-link text-gray-400 hover:bg-white/5 transition-all">
+            <i class="fas fa-robot mt-1"></i> Train AI
+        </button>
+        <div class="mt-auto">
+            <button onclick="logout()" class="w-full p-4 rounded-xl flex gap-4 text-red-400 hover:bg-red-500/10 transition-all">
+                <i class="fas fa-sign-out-alt mt-1"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 lg:ml-72 p-4 lg:p-10 pb-24">
+        
+        <section id="dashboard-section" class="hidden animate-fadeIn">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h1 class="text-3xl font-black mb-2">Live Insights ✨</h1>
+                    <p class="text-gray-500">Real-time WhatsApp leads from your bot</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                <div class="glass-card p-5 rounded-2xl">
+                    <p class="text-xs text-gray-400 uppercase font-bold mb-1">Total Leads</p>
+                    <h2 id="lead-count" class="text-4xl font-black text-blue-500">0</h2>
+                </div>
+            </div>
+
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-users text-blue-500 text-sm"></i> Recent Conversations
+            </h2>
+            <div id="leads-container" class="space-y-3">
+                <div class="text-gray-500 animate-pulse">Fetching leads...</div>
+            </div>
+        </section>
+
+        <section id="training-section" class="animate-fadeIn">
+            <h1 class="text-3xl font-black mb-2">Advanced AI Training 🧠</h1>
+            <p class="text-gray-500 mb-8">Update your business knowledge base instantly</p>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <form id="setupForm" class="lg:col-span-2 grid lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-3xl space-y-5 h-fit">
+                        <h3 class="text-blue-500 font-bold flex items-center gap-2"><i class="fas fa-id-card"></i> Business Details</h3>
+                        <input id="bizName" class="input-field" placeholder="Business Name" required>
+                        <div class="grid grid-cols-2 gap-3">
+                            <input id="bizPhone" class="input-field" placeholder="WhatsApp No.">
+                            <input id="bizAddress" class="input-field" placeholder="City/Location">
+                        </div>
+                        <hr class="border-white/5">
+                        <h3 class="text-blue-500 font-bold flex items-center gap-2"><i class="fas fa-tag"></i> Featured Offering</h3>
+                        <input id="propertyTitle" class="input-field" placeholder="Item/Property Name">
+                        <input id="propertyPrice" class="input-field" placeholder="Price (e.g. ₹50 Lakh)">
+                        
+                        <label class="text-xs text-gray-400 font-bold block uppercase">Gallery Upload</label>
+                        <div class="relative border-2 border-dashed border-white/10 p-4 rounded-xl hover:border-blue-500/50 transition-all text-center">
+                            <input type="file" id="bizImages" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" multiple accept="image/*">
+                            <i class="fas fa-cloud-upload-alt mb-2 text-xl text-gray-500"></i>
+                            <p class="text-gray-500 text-xs">Drop images here</p>
+                        </div>
+                        
+                        <div id="current-images-section" class="hidden bg-white/5 p-4 rounded-2xl">
+                            <div id="image-preview-container" class="flex gap-2 overflow-x-auto pb-2"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-3xl space-y-5">
+                        <h3 class="text-blue-500 font-bold flex items-center gap-2"><i class="fas fa-brain"></i> AI Logic</h3>
+                        <textarea id="bizServices" class="input-field h-32" placeholder="Describe your services & FAQs..."></textarea>
+                        
+                        <div class="space-y-3">
+                            <label class="text-xs font-bold text-gray-500 uppercase">Knowledge Fields</label>
+                            <div id="dynamic-fields-container" class="space-y-2"></div>
+                            <button type="button" onclick="addDetailField()" class="w-full py-2 border border-white/5 rounded-xl text-xs text-blue-400 font-bold hover:bg-blue-500/5">
+                                + Add Field
+                            </button>
+                        </div>
+
+                        <textarea id="bizInstructions" class="input-field h-24" placeholder="Bot Tone (e.g. Professional, Hinglish)"></textarea>
+                        
+                        <button type="submit" id="submit-btn" class="btn-primary w-full shadow-xl shadow-blue-500/20">
+                            Save Changes 🚀
+                        </button>
+                    </div>
+                </form>
+
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="glass-card p-6 rounded-3xl text-center">
+                        <h3 class="text-blue-500 font-bold mb-4 flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp"></i> Connection Status
+                        </h3>
+                        
+                        <div id="qr-wrapper" class="hidden mb-4 p-4 bg-white rounded-2xl inline-block mx-auto animate-fadeIn">
+                            <canvas id="qr-canvas"></canvas>
+                            <p class="text-black text-[10px] font-black mt-2">SCAN WITH WHATSAPP</p>
+                        </div>
+
+                        <div id="status-display" class="mb-6 p-4 rounded-2xl bg-white/5 border border-white/5">
+                            <div id="status-dot-ui" class="w-3 h-3 bg-red-500 rounded-full mx-auto mb-2 animate-pulse"></div>
+                            <p id="status-text" class="text-sm font-bold text-gray-400">DISCONNECTED</p>
+                        </div>
+
+                        <button onclick="startWhatsApp()" id="ws-btn" class="btn-primary w-full bg-green-600 hover:bg-green-500 shadow-green-500/10">
+                            Connect WhatsApp
+                        </button>
+                        
+                        <p class="text-[10px] text-gray-500 mt-4 leading-relaxed">
+                            Linking allows ZylotAi to automate your customer replies 24/7.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<nav class="lg:hidden fixed bottom-0 w-full glass-card flex justify-around p-3 z-50">
+    <button onclick="showSection('dashboard')" class="p-2 text-gray-400 focus:text-blue-500"><i class="fas fa-th-large block"></i></button>
+    <button onclick="showSection('training')" class="p-2 text-blue-500"><i class="fas fa-robot block"></i></button>
+</nav>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+
+<script>
+const socket = io();
+const ownerId = localStorage.getItem('zylotOwnerId');
+const authHeaders = { 'x-owner-id': ownerId };
+
+if (!ownerId) window.location.href = '/';
+
+// --- WhatsApp & Socket.io Logic ---
+async function startWhatsApp() {
+    const btn = document.getElementById('ws-btn');
+    btn.disabled = true;
+    btn.innerText = "Initializing Bot...";
+    
+    try {
+        await fetch('/api/start-bot', { method: 'POST', headers: authHeaders });
+    } catch (e) { alert("Error connecting to server."); btn.disabled = false; }
+}
+
+socket.on(`qr-${ownerId}`, (qr) => {
+    document.getElementById('qr-wrapper').classList.remove('hidden');
+    document.getElementById('status-text').innerText = "SCAN QR CODE";
+    document.getElementById('status-dot-ui').className = "w-3 h-3 bg-yellow-500 rounded-full mx-auto mb-2 animate-bounce";
+    
+    new QRious({
+        element: document.getElementById('qr-canvas'),
+        size: 180,
+        value: qr
+    });
+});
+
+socket.on(`ready-${ownerId}`, () => {
+    document.getElementById('qr-wrapper').classList.add('hidden');
+    document.getElementById('status-text').innerText = "CONNECTED & LIVE";
+    document.getElementById('status-text').className = "text-sm font-bold text-green-500";
+    document.getElementById('status-dot-ui').className = "w-3 h-3 bg-green-500 rounded-full mx-auto mb-2";
+    document.getElementById('ws-btn').innerText = "Bot Online ✅";
+    document.getElementById('ws-btn').classList.replace('bg-green-600', 'bg-blue-600');
+});
+
+// --- Lead Management ---
+async function fetchLeads() {
+    try {
+        const res = await fetch('/api/leads', { headers: authHeaders });
+        const leads = await res.json();
+        document.getElementById('lead-count').innerText = leads.length;
+        const container = document.getElementById('leads-container');
+        
+        if (!leads.length) {
+            container.innerHTML = '<div class="glass-card p-10 text-center text-gray-500 rounded-3xl border-dashed">No leads yet.</div>';
+            return;
+        }
+
+        container.innerHTML = leads.map(l => `
+            <div class="glass-card p-4 rounded-2xl flex justify-between items-center animate-fadeIn">
+                <div>
+                    <div class="font-bold text-white flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-green-500"></i> ${l.phoneNumber?.split('@')[0]}
+                    </div>
+                    <div class="text-[10px] text-gray-500 mt-1 uppercase">${new Date(l.timestamp).toLocaleString()}</div>
+                    <div class="text-sm text-blue-400 mt-2 bg-blue-500/5 p-2 rounded-lg">"${l.query}"</div>
+                </div>
+            </div>
+        `).reverse().join('');
+    } catch (e) { console.log("Lead fetch error"); }
+}
+
+// --- Navigation ---
+function showSection(section) {
+    document.getElementById('dashboard-section').classList.toggle('hidden', section !== 'dashboard');
+    document.getElementById('training-section').classList.toggle('hidden', section !== 'training');
+    document.getElementById('nav-dashboard').classList.toggle('active-link', section === 'dashboard');
+    document.getElementById('nav-training').classList.toggle('active-link', section === 'training');
+    if(section === 'dashboard') fetchLeads();
+}
+
+// --- Form & Data Logic ---
+async function loadBusinessData() {
+    const res = await fetch('/api/business', { headers: authHeaders });
+    const biz = await res.json();
+    if(!biz.ownerId) return;
+
+    document.getElementById('bizName').value = biz.businessName || '';
+    document.getElementById('bizPhone').value = biz.contactNumber || '';
+    document.getElementById('bizAddress').value = biz.address || '';
+    document.getElementById('bizServices').value = biz.services || '';
+    document.getElementById('bizInstructions').value = biz.customInstructions || '';
+    
+    if(biz.extraDetails) {
+        JSON.parse(biz.extraDetails).forEach(f => addDetailField(f.label, f.value));
+    }
+}
+
+document.getElementById('setupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerText = "Syncing...";
+
+    const fd = new FormData();
+    fd.append('businessName', document.getElementById('bizName').value);
+    fd.append('services', document.getElementById('bizServices').value);
+    fd.append('customInstructions', document.getElementById('bizInstructions').value);
+    fd.append('contactNumber', document.getElementById('bizPhone').value);
+    fd.append('address', document.getElementById('bizAddress').value);
+    
+    const extra = [];
+    document.querySelectorAll('.dynamic-row').forEach(r => {
+        extra.push({ label: r.querySelector('.extra-label').value, value: r.querySelector('.extra-value').value });
+    });
+    fd.append('extraDetails', JSON.stringify(extra));
+
+    const imgInput = document.getElementById('bizImages');
+    for(let i=0; i<imgInput.files.length; i++) fd.append('images', imgInput.files[i]);
+
+    await fetch('/api/setup-business', { method: 'POST', body: fd, headers: authHeaders });
+    alert("AI Training Updated! ✅");
+    btn.disabled = false;
+    btn.innerText = "Save Changes 🚀";
+});
+
+function addDetailField(l='', v='') {
+    const div = document.createElement('div');
+    div.className = "flex gap-2 items-center dynamic-row animate-fadeIn";
+    div.innerHTML = `
+        <input type="text" class="input-field text-xs extra-label" placeholder="Field" value="${l}" style="width:40%">
+        <input type="text" class="input-field text-xs extra-value" placeholder="Value" value="${v}">
+        <button type="button" onclick="this.parentElement.remove()" class="text-red-500 p-2"><i class="fas fa-times"></i></button>
+    `;
+    document.getElementById('dynamic-fields-container').appendChild(div);
+}
+
+function logout() { localStorage.clear(); window.location.href = '/'; }
+
+loadBusinessData();
+fetchLeads();
+setInterval(fetchLeads, 30000);
+</script>
+</body>
+</html>

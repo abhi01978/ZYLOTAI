@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%232563eb%22/><text y=%2250%%22 x=%2250%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-family=%22'Plus Jakarta Sans', Arial%22 font-size=%2265%22 fill=%22white%22 font-weight=%22800%22>Z</text></svg>">
+    <title>ZylotAi | Automate Your Business WhatsApp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-gradient { background: radial-gradient(circle at 50% 50%, #1e40af 0%, #050505 100%); opacity: 0.15; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .text-gradient { background: linear-gradient(to right, #60a5fa, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+        .float { animation: float 6s ease-in-out infinite; }
+    </style>
+    <div id="newYearBanner" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-3 text-sm animate-pulse">
+    <p><i class="fas fa-gift mr-2"></i> Happy New Year 2026! Book a FREE AI Demo & Get 25% Off Your First Month! <i class="fas fa-fire ml-2"></i></p>
+</div>
+
+<script>
+    // JavaScript to hide the banner after a certain date (e.g., Jan 5th)
+    document.addEventListener('DOMContentLoaded', function() {
+        const newYearBanner = document.getElementById('newYearBanner');
+        const endDate = new Date('2026-01-05T23:59:59'); // Banner will disappear after Jan 5th, 2026
+
+        if (newYearBanner && new Date() > endDate) {
+            newYearBanner.style.display = 'none';
+        }
+    });
+</script>
+</head>
+<body>
+
+<div id="nyModal" class="fixed inset-0 z-[9999] flex items-center justify-center px-4 opacity-0 pointer-events-none transition-all duration-500">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
+    
+    <div class="glass relative max-w-md w-full p-8 rounded-[2.5rem] border-white/10 bg-gradient-to-b from-blue-600/20 to-transparent text-center transform scale-90 transition-all duration-500" id="modalCard">
+        
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-white/50 hover:text-white transition">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+
+        <div class="w-20 h-20 bg-blue-600 rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-2xl shadow-blue-500/50 rotate-12">
+            <span class="text-4xl">🎉</span>
+        </div>
+
+        <h2 class="text-4xl font-black text-white mb-2 leading-tight">Happy New Year <br><span class="text-gradient">2026</span></h2>
+        <p class="text-gray-400 mb-8 mt-4">Naye saal mein apne business ko banaiye smart aur automated. ZylotAi lekar aaya hai special New Year gifts aapke liye!</p>
+        
+        <div class="space-y-3">
+            <a href="#contact" onclick="closeModal()" class="block w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-blue-500 hover:text-white transition-all shadow-xl">
+                Claim My New Year Gift 🎁
+            </a>
+            <button onclick="closeModal()" class="text-sm text-gray-500 hover:text-white transition underline">No thanks, I'll explore first</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Logic to show modal on load
+    window.onload = function() {
+        // Sirf ek baar dikhane ke liye (Session storage use kar rahe hain)
+        if (!sessionStorage.getItem('nyModalShown')) {
+            const modal = document.getElementById('nyModal');
+            const card = document.getElementById('modalCard');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                card.classList.remove('scale-90');
+                card.classList.add('scale-100');
+            }, 1000); // 1 second baad dikhega
+        }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('nyModal');
+        const card = document.getElementById('modalCard');
+        
+        card.classList.remove('scale-100');
+        card.classList.add('scale-90');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        
+        // Taaki user baar-baar disturb na ho
+        sessionStorage.setItem('nyModalShown', 'true');
+    }
+</script>
+    <nav class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+        <div class="text-2xl font-extrabold tracking-tighter">Zylot<span class="text-blue-500">AI</span></div>
+        <div class="hidden md:flex space-x-8 text-sm text-gray-400">
+            <a href="#" class="hover:text-white transition">Features</a>
+            <a href="#" class="hover:text-white transition">Pricing</a>
+            <a href="#" class="hover:text-white transition">Success Stories</a>
+        </div>
+        <button class="bg-white text-black px-6 py-2 rounded-full font-semibold text-sm hover:bg-blue-500 hover:text-white transition duration-300">
+            Get Started Free
+        </button>
+    </nav>
+
+    <section class="max-w-7xl mx-auto px-8 py-18 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+            <span class="bg-blue-500/10 text-blue-400 px-4 py-1 rounded-full text-xs font-bold border border-blue-500/20">
+                🚀 NEXT GEN AI AUTOMATION
+            </span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mt-6 leading-tight">
+                Stop Missing <br> <span class="text-gradient">Leads on WhatsApp</span>
+            </h1>
+            <p class="text-gray-400 mt-6 text-lg max-w-md">
+                Hamara AI aapke business ke liye 24/7 kaam karta hai. Ye automatic replies bhejta hai, appointments fix karta hai aur sales generate karta hai—jab aap so rahe hote hain.
+            </p>
+            <div class="flex space-x-4 mt-10">
+                <a href="https://wa.me/your-number" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-bold flex items-center transition shadow-lg shadow-blue-500/20">
+                    <i class="fab fa-whatsapp mr-2 text-xl"></i> Live Demo Check Karo
+                </a>
+            </div>
+            <div class="mt-8 flex items-center space-x-4 text-sm text-gray-500 font-medium">
+                <span>✓ Zero Setup Fee</span>
+                <span>✓ 2-Minute Integration</span>
+            </div>
+        </div>
+
+        <div class="relative flex justify-center float">
+            <div class="w-[300px] h-[600px] bg-black border-[8px] border-gray-800 rounded-[3rem] shadow-2xl relative overflow-hidden">
+                <div class="bg-[#075e54] p-4 pt-8 flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                    <div>
+                        <p class="text-[10px] font-bold">AI Assistant (Business)</p>
+                        <p class="text-[8px] opacity-80">Online</p>
+                    </div>
+                </div>
+                <div class="p-4 space-y-4 text-[11px] bg-[#e5ddd5] h-full overflow-y-auto">
+                    <div class="bg-white p-2 rounded-lg w-3/4 shadow-sm text-black">
+                        Hello! Mujhe aapke services ke baare mein jaanna hai. Price kya hai?
+                    </div>
+                    <div class="bg-[#dcf8c6] p-2 rounded-lg w-3/4 ml-auto shadow-sm text-black border-l-4 border-green-500">
+                        <b>Zylot:</b> Hello! Hamara premium package ₹1999 se shuru hota hai. Kya main aapke liye ek slot book kar doon?
+                    </div>
+                    <div class="bg-white p-2 rounded-lg w-3/4 shadow-sm text-black mt-2">
+                        Haan, kal subah 10 baje?
+                    </div>
+                    <div class="bg-[#dcf8c6] p-2 rounded-lg w-3/4 ml-auto shadow-sm text-black border-l-4 border-green-500">
+                        <b>Zylot:</b> Done! Kal 10:00 AM ka appointment fix ho gaya hai. Aapko confirmation SMS bhej diya hai. See you! 😊
+                    </div>
+                </div>
+            </div>
+            <div class="absolute -z-10 w-64 h-64 bg-blue-500 rounded-full blur-[100px] opacity-20"></div>
+        </div>
+    </section>
+    <section class="max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
+    <div class="text-center mb-16">
+        <h2 class="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4">Why Choose Us?</h2>
+        <p class="text-4xl md:text-5xl font-extrabold text-white">Market mein hazaron bots hain, <br><span class="text-gradient">ZylotAi hi kyun?</span></p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass p-8 rounded-[2.5rem] border-white/5 hover:border-blue-500/50 transition-all duration-500 group">
+            <div class="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+                <i class="fas fa-brain text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4">Insaan jaisi samajh (Gen-AI)</h3>
+           <p class="text-gray-400 text-sm leading-relaxed">
+        Hum koi third-party API par depend nahi hain. ZylotAi chalta hai hamare apne **Custom-Trained AI Model** par, jo 10 Lakh se zyada Indian customer conversations par train kiya gaya hai taaki wo Hinglish aur local context ko behtar samajh sake.
+    </p>
+        </div>
+
+        <div class="glass p-8 rounded-[2.5rem] border-white/5 hover:border-green-500/50 transition-all duration-500 group">
+            <div class="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center text-green-500 mb-6 group-hover:scale-110 transition-transform">
+                <i class="fas fa-bolt text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4">Zero Learning Curve</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Aapko koi technical knowledge nahi chahiye. Hum aapka poora setup karke dete hain. Bas QR scan karo aur 5 minute mein automation shuru!</p>
+        </div>
+
+        <div class="glass p-8 rounded-[2.5rem] border-white/5 hover:border-purple-500/50 transition-all duration-500 group">
+            <div class="w-14 h-14 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-500 mb-6 group-hover:scale-110 transition-transform">
+                <i class="fas fa-shield-alt text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4">Anti-Ban Technology</h3>
+           <p class="text-gray-400 text-sm leading-relaxed">
+        Hamara system bina kisi third-party dependence ke chalta hai. Hum **"Adaptive Human-Pattern"** technology use karte hain jo bilkul ek insaan ki tarah type aur respond karti hai, jisse account safety 100% rehti hai aur koi technical complication nahi aati.
+    </p>
+        </div>
+    </div>
+
+    <div class="mt-20 overflow-x-auto">
+        <table class="w-full text-left border-collapse glass rounded-[2rem] overflow-hidden">
+            <thead>
+                <tr class="bg-white/5">
+                    <th class="p-6 text-white font-bold">Features</th>
+                    <th class="p-6 text-gray-400">Other Platforms</th>
+                    <th class="p-6 text-blue-500 font-bold">ZylotAi</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm">
+                <tr class="border-b border-white/5">
+                    <td class="p-6 text-white">Reply Quality</td>
+                    <td class="p-6 text-gray-500 italic">Robotic & Limited</td>
+                    <td class="p-6 text-green-400 font-semibold">100% Human-like AI</td>
+                </tr>
+                <tr class="border-b border-white/5">
+                    <td class="p-6 text-white">Complex Queries</td>
+                    <td class="p-6 text-gray-500 italic">Error: I don't understand</td>
+                    <td class="p-6 text-green-400 font-semibold">Handles everything easily</td>
+                </tr>
+                <tr>
+                    <td class="p-6 text-white">Setup Time</td>
+                    <td class="p-6 text-gray-500 italic">Days or Weeks</td>
+                    <td class="p-6 text-green-400 font-semibold">Under 10 Minutes</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+    <section class="max-w-7xl mx-auto px-8 py-20 border-t border-white/5">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold">Aapke Business Ke Liye Sab Kuch</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass p-8 rounded-3xl hover:border-blue-500/50 transition">
+                <i class="fas fa-bolt text-blue-500 text-3xl mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Instant Reply</h3>
+                <p class="text-gray-400">Customer ke message karte hi 5 seconds ke andar reply jayega. Ek bhi lead miss nahi hogi.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:border-blue-500/50 transition">
+                <i class="fas fa-calendar-check text-purple-500 text-3xl mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Smart Scheduling</h3>
+                <p class="text-gray-400">AI aapke busy schedule ko dekh kar khud hi appointments fix kar dega.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl hover:border-blue-500/50 transition">
+                <i class="fas fa-language text-green-500 text-3xl mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Multi-Language</h3>
+                <p class="text-gray-400">Hindi, English ya Hinglish—hamara AI har bhasha samajhta hai aur jawab deta hai.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-8 py-24">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+            <h2 class="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4">Live Preview</h2>
+            <p class="text-4xl font-extrabold mb-6 text-white">Dekhiye AI kaise <span class="text-gradient">kaam karta hai</span></p>
+            <p class="text-gray-400 mb-8 text-lg">
+                Yahan ek typical customer chat ka example hai. Hamara AI itna natural hai ki customer ko pata hi nahi chalta ki wo ek bot se baat kar raha hai.
+            </p>
+            
+            <div class="space-y-4">
+                <div class="flex items-start gap-4 p-4 glass rounded-2xl border-white/5">
+                    <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-500">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <p class="text-sm text-gray-300"><b>Smart Context:</b> AI aapke business ki har detail yaad rakhta hai.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 glass rounded-2xl border-white/5">
+                    <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center text-green-500">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <p class="text-sm text-gray-300"><b>Action Driven:</b> Sirf baatein nahi, ye seedha appointments book karta hai.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center">
+            <div class="w-full max-w-[380px] h-[650px] bg-[#0b141a] rounded-[3rem] border-[10px] border-[#222c32] shadow-2xl relative overflow-hidden flex flex-col">
+                
+                <div class="bg-[#202c33] p-4 pt-10 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-white/50"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="text-white text-sm font-bold">New Customer (Leads)</h4>
+                        <p class="text-green-500 text-[10px] animate-pulse">typing...</p>
+                    </div>
+                    <div class="flex gap-4 text-gray-400 text-sm">
+                        <i class="fas fa-video"></i>
+                        <i class="fas fa-phone"></i>
+                    </div>
+                </div>
+
+                <div class="flex-grow p-4 space-y-4 bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-repeat overflow-y-auto" id="chat-screen">
+                    <div class="bg-[#202c33] text-[#e9edef] p-3 rounded-lg rounded-tl-none w-3/4 text-sm shadow-md">
+                        Hi, mujhe aapke services ke baare mein jaanna tha. Kya aap Noida mein available ho?
+                        <p class="text-[9px] text-gray-400 text-right mt-1">10:45 AM</p>
+                    </div>
+
+                    <div class="bg-[#005c4b] text-[#e9edef] p-3 rounded-lg rounded-tr-none w-3/4 ml-auto text-sm shadow-md border-l-4 border-green-400">
+                        <b>Zylot:</b> Hello! Haan ji, hum Noida aur Delhi NCR mein available hain. Aap kis service ke liye enquiry kar rahe hain?
+                        <p class="text-[9px] text-gray-200 text-right mt-1">10:45 AM</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#202c33] p-3 flex items-center gap-3">
+                    <i class="far fa-smile text-gray-400 text-xl"></i>
+                    <div class="bg-[#2a3942] flex-grow rounded-lg p-2 text-gray-400 text-xs">Type a message</div>
+                    <div class="w-10 h-10 bg-[#00a884] rounded-full flex items-center justify-center text-white">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-8 py-10">
+    <div class="glass p-6 rounded-[2rem] border-white/5 bg-gradient-to-r from-blue-900/10 to-transparent flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <div class="w-3 h-3 bg-green-500 rounded-full absolute -top-1 -right-1 animate-ping"></div>
+                <div class="w-3 h-3 bg-green-500 rounded-full absolute -top-1 -right-1"></div>
+                <i class="fas fa-broadcast-tower text-2xl text-blue-500"></i>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg">Live Results</h4>
+                <p class="text-gray-400 text-sm">Hamara AI abhi in businesses ke liye kaam kar raha hai</p>
+            </div>
+        </div>
+
+        <div class="flex gap-4 overflow-hidden w-full md:w-2/3 relative h-16 items-center">
+            <div class="flex gap-4 animate-marquee whitespace-nowrap">
+                <div class="glass px-4 py-2 rounded-full border-white/10 flex items-center gap-2 shrink-0">
+                    <span class="text-green-400 text-xs">●</span>
+                    <span class="text-white text-xs font-medium"><b>Royal Gym:</b> New Appointment Fixed</span>
+                    <span class="text-gray-500 text-[10px]">2m ago</span>
+                </div>
+                <div class="glass px-4 py-2 rounded-full border-white/10 flex items-center gap-2 shrink-0">
+                    <span class="text-green-400 text-xs">●</span>
+                    <span class="text-white text-xs font-medium"><b>Skin Clinic:</b> Lead Qualified</span>
+                    <span class="text-gray-500 text-[10px]">5m ago</span>
+                </div>
+                <div class="glass px-4 py-2 rounded-full border-white/10 flex items-center gap-2 shrink-0">
+                    <span class="text-green-400 text-xs">●</span>
+                    <span class="text-white text-xs font-medium"><b>Interior Pro:</b> Catalogue Sent</span>
+                    <span class="text-gray-500 text-[10px]">12m ago</span>
+                </div>
+                <div class="glass px-4 py-2 rounded-full border-white/10 flex items-center gap-2 shrink-0">
+                    <span class="text-green-400 text-xs">●</span>
+                    <span class="text-white text-xs font-medium"><b>Royal Gym:</b> New Appointment Fixed</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+        animation: marquee 20s linear infinite;
+    }
+    .animate-marquee:hover {
+        animation-play-state: paused;
+    }
+</style>
+
+<section class="max-w-7xl mx-auto px-8 py-24 relative">
+    <div class="text-center mb-16">
+        <h2 class="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4">Pricing Plans</h2>
+        <p class="text-4xl md:text-5xl font-extrabold text-white">Choose the perfect plan for <span class="text-gradient">your growth</span></p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 items-center">
+        
+        <div class="glass p-10 rounded-[2.5rem] border-white/5 hover:border-white/20 transition-all duration-300">
+            <h3 class="text-xl font-bold mb-2">Starter</h3>
+            <p class="text-gray-400 text-sm mb-6">Chote businesses ke liye perfect shuruat.</p>
+            <div class="text-4xl font-extrabold mb-6">₹999<span class="text-lg text-gray-500 font-medium">/month</span></div>
+            
+            <ul class="space-y-4 mb-10 text-sm text-gray-300">
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> 500 AI Replies/Month</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Basic Lead Capture</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Single Device Support</li>
+                <li class="opacity-40"><i class="fas fa-times mr-2"></i> Appointment Booking</li>
+            </ul>
+            
+            <button class="w-full py-4 rounded-2xl border border-white/10 font-bold hover:bg-white/5 transition">Get Started</button>
+        </div>
+ <div class="glass p-8 rounded-[2rem] border-white/10 hover:border-blue-500/30 transition-all flex flex-col h-full bg-white/[0.02]">
+            <h3 class="text-lg font-bold mb-1 text-white">Standard</h3>
+            <p class="text-gray-500 text-xs mb-6">Growing small businesses.</p>
+            <div class="text-3xl font-extrabold mb-6">₹1,799<span class="text-sm text-gray-500 font-medium">/mo</span></div>
+            
+            <ul class="space-y-4 mb-8 text-[13px] text-gray-400 flex-grow">
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> 2000 AI Replies</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Lead Dashboard</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> WhatsApp Web Sync</li>
+                 <li><i class="fas fa-check text-blue-500 mr-2"></i> Appointment Booking</li>
+                <li class="opacity-30"><i class="fas fa-times mr-2"></i> Multi-agent support</li>
+                
+            </ul>
+            <button class="w-full py-3 rounded-xl bg-white text-black text-sm font-bold hover:bg-blue-500 hover:text-white transition">Choose Standard</button>
+        </div>
+        <div class="glass p-10 rounded-[2.5rem] border-blue-500/50 relative transform md:scale-110 shadow-2xl shadow-blue-500/10">
+            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-widest">
+                Most Popular
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-blue-400">Business Pro</h3>
+            <p class="text-gray-400 text-sm mb-6">Automated sales aur bookings ke liye.</p>
+            <div class="text-4xl font-extrabold mb-6">₹2,499<span class="text-lg text-gray-500 font-medium">/month</span></div>
+            
+            <ul class="space-y-4 mb-10 text-sm text-gray-300">
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Unlimited AI Replies</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Smart Appointment Booking</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Custom Knowledge Base</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> WhatsApp CRM Integration</li>
+                 <li><i class="fas fa-check text-blue-500 mr-2"></i> Appointment Booking</li>
+                <li ><i class="fas fa-check text-blue-500 mr-2"></i> Multi-agent support</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Priority Support</li>
+            </ul>
+            
+            <button class="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition shadow-lg shadow-blue-500/30">Claim 7-Day Free Trial</button>
+        </div>
+
+        <div class="glass p-10 rounded-[2.5rem] border-white/5 hover:border-white/20 transition-all duration-300">
+            <h3 class="text-xl font-bold mb-2">Custom</h3>
+            <p class="text-gray-400 text-sm mb-6">Bade showrooms aur agencies ke liye.</p>
+            <div class="text-4xl font-extrabold mb-6">Contact Us</div>
+            
+            <ul class="space-y-4 mb-10 text-sm text-gray-300">
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Multi-Agent Support</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> API Access</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> Custom AI Training</li>
+                <li><i class="fas fa-check text-blue-500 mr-2"></i> White-label Dashboard</li>
+            </ul>
+            
+            <button class="w-full py-4 rounded-2xl border border-white/10 font-bold hover:bg-white/5 transition">Talk to Expert</button>
+        </div>
+
+    </div>
+</section>
+    <section class="max-w-7xl mx-auto px-8 py-24 relative">
+    <div class="absolute top-0 right-0 -z-10 w-72 h-72 bg-purple-600 rounded-full blur-[120px] opacity-10"></div>
+    
+    <div class="text-center mb-20">
+        <h2 class="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4">Powerful Capabilities</h2>
+        <p class="text-4xl md:text-5xl font-extrabold">Features jo aapka <span class="text-gradient">Business badha dein</span></p>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-6">
+        
+        <div class="md:col-span-8 glass p-10 rounded-[2.5rem] relative overflow-hidden group border-white/10 hover:border-blue-500/50 transition-all duration-500">
+            <div class="relative z-10">
+                <div class="w-14 h-14 bg-blue-600/20 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/30">
+                    <i class="fas fa-brain text-blue-500 text-2xl"></i>
+                </div>
+                <h3 class="text-3xl font-bold mb-4">Self-Learning AI Training</h3>
+                <p class="text-gray-400 text-lg leading-relaxed max-w-md">
+                    Aapko bas apni website ka link ya PDF dena hai. Hamara AI aapke business ke baare mein sab kuch seekh lega aur customers ko bilkul aapki tarah jawab dega.
+                </p>
+            </div>
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all"></div>
+        </div>
+
+        <div class="md:col-span-4 glass p-10 rounded-[2.5rem] border-white/10 hover:border-purple-500/50 transition-all duration-500 group">
+            <div class="w-14 h-14 bg-purple-600/20 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/30">
+                <i class="fas fa-clock text-purple-500 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">24/7 Non-Stop</h3>
+            <p class="text-gray-400">Raat ke 3 baje bhi agar lead aayegi, toh wo miss nahi hogi. Instant response = Guaranteed Sales.</p>
+        </div>
+
+        <div class="md:col-span-4 glass p-10 rounded-[2.5rem] border-white/10 hover:border-green-500/50 transition-all duration-500 group">
+            <div class="w-14 h-14 bg-green-600/20 rounded-2xl flex items-center justify-center mb-6 border border-green-500/30">
+                <i class="fas fa-chart-line text-green-500 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Real-time Insights</h3>
+            <p class="text-gray-400">Track karein ki kitne logo ne chat ki aur AI ne kitne appointments fix kiye. Pura data aapke dashboard par.</p>
+        </div>
+
+        <div class="md:col-span-8 glass p-10 rounded-[2.5rem] relative overflow-hidden group border-white/10 hover:border-orange-500/50 transition-all duration-500">
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center gap-8">
+                <div class="md:w-1/2">
+                    <div class="w-14 h-14 bg-orange-600/20 rounded-2xl flex items-center justify-center mb-6 border border-orange-500/30">
+                        <i class="fab fa-whatsapp text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4">Zero Friction Setup</h3>
+                    <p class="text-gray-400 text-lg">
+                        Koi technical knowledge nahi chahiye. Bas QR code scan karein aur 2 minute mein aapka AI assistant active ho jayega.
+                    </p>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10 rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                        <i class="fas fa-qrcode text-6xl text-white/50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-8 py-24 relative overflow-hidden">
+    <div class="text-center mb-16">
+        <h2 class="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4">Success Stories</h2>
+        <p class="text-4xl font-extrabold text-white">Trusted by <span class="text-gradient">Fast-Growing Businesses</span></p>
+    </div>
+
+    <div class="relative group">
+        <div id="testimonial-container" class="flex transition-transform duration-500 ease-in-out gap-6 overflow-x-hidden py-10">
+            
+            <div class="min-w-[350px] md:min-w-[450px] glass p-8 rounded-[2rem] border-white/10 relative">
+                <div class="flex text-yellow-500 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 italic text-lg mb-8 leading-relaxed">
+                    "Pehle main din bhar WhatsApp pe replies dene mein pareshan rehta tha. ZylotAI ne mera 80% kaam automate kar diya. Ab main sirf tab phone uthata hoon jab deal close karni hoti hai!"
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center font-bold">AK</div>
+                    <div>
+                        <h4 class="font-bold text-white">Amit Khanna</h4>
+                        <p class="text-xs text-gray-500">Owner, Khanna Real Estate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="min-w-[350px] md:min-w-[450px] glass p-8 rounded-[2rem] border-white/10 relative">
+                <div class="flex text-yellow-500 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 italic text-lg mb-8 leading-relaxed">
+                    "Hamaare gym mein enquiry aane ke 1 minute mein AI ne message karke demo book kar diya. Conversion rate seedha double ho gaya. Magic hai ye!"
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center font-bold">RS</div>
+                    <div>
+                        <h4 class="font-bold text-white">Rahul Sharma</h4>
+                        <p class="text-xs text-gray-500">Founder, Iron Fitness Gym</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="min-w-[350px] md:min-w-[450px] glass p-8 rounded-[2rem] border-white/10 relative">
+                <div class="flex text-yellow-500 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 italic text-lg mb-8 leading-relaxed">
+                    "Instagram ads se leads aati thi par koi reply nahi deta tha. ZylotAI ne mera response time 2 ghante se 2 second kar diya. Best investment for my boutique."
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center font-bold">PJ</div>
+                    <div>
+                        <h4 class="font-bold text-white">Priya Jain</h4>
+                        <p class="text-xs text-gray-500">Owner, Elegance Boutique</p>
+                    </div>
+                </div>
+            </div>
+<div class="min-w-[350px] md:min-w-[450px] glass p-8 rounded-[2rem] border-white/10 relative">
+                <div class="flex text-yellow-500 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 italic text-lg mb-8 leading-relaxed">
+                    "Doctor hone ke naate main calls nahi utha sakta tha. Ab AI patient ki detail leta hai aur clinic ke time ke hisaab se appointment fix kar deta hai. Life easy ho gayi hai!"
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center font-bold text-white">RM</div>
+                    <div>
+                        <h4 class="font-bold text-white">Dr. Rakesh Mehra</h4>
+                        <p class="text-xs text-gray-500">Founder, Mehra Dental Care</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="min-w-[350px] md:min-w-[450px] glass p-8 rounded-[2rem] border-white/10 relative">
+                <div class="flex text-yellow-500 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 italic text-lg mb-8 leading-relaxed">
+                    "Interior design mein bohot queries aati hain. ZylotAI pehle unka budget aur location pooch leta hai, fir mujhe vahi leads milti hain jo serious hain. Productivity 10x ho gayi!"
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center font-bold text-white">SN</div>
+                    <div>
+                        <h4 class="font-bold text-white">Sneha Nair</h4>
+                        <p class="text-xs text-gray-500">Creative Head, DreamSpace Interiors</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="min-w-[350px] md:min-w-[450px] glass p-8 rounded-[2rem] border-white/10 relative">
+                <div class="flex text-yellow-500 mb-4">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-300 italic text-lg mb-8 leading-relaxed">
+                    "Admission ke time pe itne messages aate hain ki staff sambhaal nahi paata. ZylotAI sabko course details aur fees bhej deta hai automatically. Highly recommended!"
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center font-bold text-white">VP</div>
+                    <div>
+                        <h4 class="font-bold text-white">Vikas Pandey</h4>
+                        <p class="text-xs text-gray-500">Director, Success Academy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center mt-8 gap-4">
+            <button onclick="scrollSlider(-1)" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition"><i class="fas fa-chevron-left"></i></button>
+            <button onclick="scrollSlider(1)" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+    </div>
+</section>
+
+<script>
+    const container = document.getElementById('testimonial-container');
+    const scrollAmount = 400;
+    const intervalTime = 3000; // 3 seconds
+    let autoScroll;
+
+    function scrollSlider(direction) {
+        container.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+
+    function startAutoplay() {
+        autoScroll = setInterval(() => {
+            // end pe pahunchne par wapas start
+            if (
+                container.scrollLeft + container.clientWidth >=
+                container.scrollWidth
+            ) {
+                container.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                scrollSlider(1);
+            }
+        }, intervalTime);
+    }
+
+    function stopAutoplay() {
+        clearInterval(autoScroll);
+    }
+
+    // autoplay start
+    startAutoplay();
+
+    // optional: hover par autoplay ruk jaaye
+    container.addEventListener('mouseenter', stopAutoplay);
+    container.addEventListener('mouseleave', startAutoplay);
+</script>
+
+<section class="w-full px-4 py-20 relative" id="contact">
+    <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-blue-600 rounded-full blur-[150px] opacity-10"></div>
+
+    <div class="max-w-7xl mx-auto glass p-4 md:p-12 rounded-[2rem] md:rounded-[3rem] border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent overflow-hidden relative">
+        <div class="grid lg:grid-cols-2 gap-10 relative z-10">
+            
+            <div class="px-2 md:px-0">
+                <h2 class="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4 text-center md:text-left">Contact Us</h2>
+                <p class="text-3xl md:text-4xl font-extrabold text-white mb-6 text-center md:text-left">Koi doubt hai? <br><span class="text-gradient">Seedha baat karein!</span></p>
+                <p class="text-gray-400 mb-8 leading-relaxed text-sm md:text-lg text-center md:text-left">
+                    ZylotAi ek advanced AI automation engine hai jo har scale ke businesses ko lead generation aur customer retention mein help karta hai.
+                </p>
+
+                <div class="space-y-4 md:space-y-6">
+                    <a href="https://wa.me/918130287242?text=Hi%20ZylotAi,%20mujhe%20apne%20business%20ke%20liye%20FREE%20Demo%20chahiye." class="flex items-center gap-4 group cursor-pointer bg-white/5 p-3 rounded-2xl border border-white/5 md:bg-transparent md:border-none">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-all">
+                            <i class="fab fa-whatsapp text-lg md:text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider">WhatsApp Me</p>
+                            <p class="text-white font-bold text-sm md:text-base">+91 8130287242</p>
+                        </div>
+                    </a>
+
+                    <div class="flex items-center gap-4 group bg-white/5 p-3 rounded-2xl border border-white/5 md:bg-transparent md:border-none">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                            <i class="fas fa-envelope text-lg md:text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider">Email Us</p>
+                            <p class="text-white font-bold text-sm md:text-base underline break-all">abhi0013242@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/[0.04] p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-white/10 backdrop-blur-sm">
+                <form class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Aapka Naam" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition text-white placeholder:text-gray-600">
+                        <input type="text" placeholder="Business ka Naam" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition text-white placeholder:text-gray-600">
+                    </div>
+                    <input type="tel" placeholder="WhatsApp Number" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition text-white placeholder:text-gray-600">
+                    <textarea placeholder="Aapko kis cheez mein help chahiye?" rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-blue-500 outline-none transition text-white placeholder:text-gray-600"></textarea>
+                    
+                    <button class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                        Send Message <i class="fas fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <footer class="text-center py-10 text-gray-500 text-sm border-t border-white/5">
+    <div class="mb-4 text-white font-bold tracking-widest text-lg">Zylot<span class="text-blue-500">Ai</span></div>
+    <p class="mb-4 text-gray-400">Revolutionizing Business Communication through Generative AI.</p>
+    <div class="flex justify-center gap-6 mb-6">
+        <a href="./term.html" class="hover:text-blue-500 transition">Terms</a>
+        <a href="./privacy.html" class="hover:text-blue-500 transition">Privacy</a>
+        <a href="#" class="hover:text-blue-500 transition">Cookies</a>
+    </div>
+    <p>© 2026 ZylotAi Automation. All Rights Reserved.</p>
+</footer>
+
+<div class="fab-container">
+    <a href="tel:8130287242" class="fab-button fab-call" data-tooltip="Call Us">
+        <i class="fas fa-phone-alt"></i>
+    </a>
+    
+    <a href="https://wa.me/918130287242?text=Hi%20ZylotAi,%20I%20want%20to%20know%20more%20about%20the%20AI%20Automation." 
+       target="_blank" 
+       class="fab-button fab-whatsapp" 
+       data-tooltip="WhatsApp Chat">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <style>
+        /* Floating Action Buttons Styling */
+.fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 9999;
+}
+
+.fab-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* WhatsApp Button Colors */
+.fab-whatsapp {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+}
+
+/* Call Button Colors */
+.fab-call {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.fab-button:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+/* Tooltip (Optional) */
+.fab-button::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 75px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.fab-button:hover::before {
+    opacity: 1;
+}
+    </style>
+
+    <script>
+    // 1. Right Click Disable karna
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // 2. Keyboard Shortcuts block karna (F12, Ctrl+Shift+I, Ctrl+U, etc.)
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123) { // F12
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Ctrl+Shift+C
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+            return false;
+        }
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U (View Source)
+            return false;
+        }
+    };
+
+    // 3. Console khulne par Debugger lagana (Advanced Protection)
+    // Isse agar koi inspect kar bhi lega, toh browser hang ya pause ho jayega
+    setInterval(function() {
+        debugger;
+    }, 100);
+</script>
+
+<style>
+    /* Poori website ka text selection band */
+body {
+    -webkit-user-select: none;  /* Chrome/Safari */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* IE10+ */
+    user-select: none;          /* Standard */
+}
+</style>
+</div>
+</body>
+</html>
