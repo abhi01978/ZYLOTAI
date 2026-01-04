@@ -31,9 +31,12 @@
 // });
 
 // /* ===================== DATABASE ===================== */
-// mongoose.connect(process.env.MONGODB_URI)
-//     .then(() => console.log('MongoDB Connected'))
-//     .catch(err => console.error('Mongo Error:', err));
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("SaaS DB Connected ✅"))
+  .catch(err => {
+    console.error("MongoDB error ❌", err);
+    process.exit(1);
+  });
 
 // /* ===================== GROQ ===================== */
 // const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
@@ -534,4 +537,5 @@ server.listen(PORT, async () => {
         await new Promise(r => setTimeout(r, 2000));
         initializeUserBot(b.ownerId);
     }
+
 });
